@@ -9,8 +9,11 @@
   "author": "Anandakumar Palanisamy",
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
     "gulp-coffee": "^1.4.3",
     "gulp-concat": "^2.6.0",
-    "gulp-util": "^3.0.7"
+    "gulp-util": "^3.0.7",
+    "jquery": "^3.1.1",
+    "mustache": "^2.2.1"
   }
 }
