@@ -4,11 +4,12 @@
   "description": "A project to showcase workflows",
   "repository": {
     "type": "git",
-    "url": "?.git"
+    "url": "https://github.com/anandakumarpalanisamy/flow_work.git"
   },
   "author": "Anandakumar Palanisamy",
   "devDependencies": {
     "gulp": "^3.9.1",
-    "gulp-util": "^3.0.7"
+    "gulp-util": "^3.0.7",
+    "gulp-coffee": "^1.4.3"
   }
 }
