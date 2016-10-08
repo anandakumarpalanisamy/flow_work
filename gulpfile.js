@@ -1,7 +1,14 @@
-//This is the file that tells gulp - what to do .. when it runs 
-var gulp = require('gulp'), //Node JS require command to import the gulp library and assign to variable to 'gulp'.
-    gutil = require('gulp-util'),
-    coffee = require('gulp-coffee'),
+/*
+ * This is the file that tells gulp - what to do .. when it runs.
+ * Node JS require command to import the gulp library and assign to variable to 'gulp'.
+ * gulp plugin that helps in logging.
+ * gulp plugin to process the Coffee Scripts.
+ * 
+ * Browserify lets us add our libraries as our dependencies.
+ */
+var gulp = require('gulp'), 
+    gutil = require('gulp-util'), 
+    coffee = require('gulp-coffee'), 
     browserify = require('gulp-browserify'),
     compass = require('gulp-compass'),
     concat = require('gulp-concat');
@@ -13,8 +20,16 @@ var jsSources = ['components/scripts/rclick.js',
 
 var sassSources = ['components/sass/style.scss'];
 
-//You create a task using the task() method.
-gulp.task('coffee', function(){
+/* You create a task using the task() method.
+ * 1. gulp.src() == Tells gulp - where the source files are.
+ * 2. Now pipe the content to the src method, to coffee module with pipe() method.
+ * 3. Now right on the coffee plugin - expect for any error by executing an ".on" error, 
+ * so that any error in coffee plugin - doesn't break the whole gulp script.
+ * 4. Take the result of the coffee command and pipe it somewhere else.
+ * 5. gulp.dest variable => means where we need to send the processed files.
+ * 
+ */
+gulp.task('coffee', function(){    
     gulp.src('components/coffee/tagline.coffee')
     .pipe(coffee({bare: true})
          .on('error', gutil.log))
@@ -22,6 +37,13 @@ gulp.task('coffee', function(){
     
 });
 
+/*
+ * Output of the gulp.src() goes in to the 
+ * pipe.concat('script.js'). This process all
+ * the java script files and concat them 
+ * as one java script file script.js. Once processed move
+ * it into builds/development.js.
+ */
 gulp.task('js', function(){
 
     gulp.src(jsSources)
