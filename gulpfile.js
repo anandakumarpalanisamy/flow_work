@@ -1,4 +1,5 @@
-var gulp = require('gulp'),
+//This is the file that tells gulp - what to do .. when it runs 
+var gulp = require('gulp'), //Node JS require command to import the gulp library and assign to variable to 'gulp'.
     gutil = require('gulp-util'),
     coffee = require('gulp-coffee'),
     browserify = require('gulp-browserify'),
@@ -12,6 +13,7 @@ var jsSources = ['components/scripts/rclick.js',
 
 var sassSources = ['components/sass/style.scss'];
 
+//You create a task using the task() method.
 gulp.task('coffee', function(){
     gulp.src('components/coffee/tagline.coffee')
     .pipe(coffee({bare: true})
