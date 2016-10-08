@@ -2,9 +2,9 @@
  * This is the file that tells gulp - what to do .. when it runs.
  * Node JS require command to import the gulp library and assign to variable to 'gulp'.
  * gulp plugin that helps in logging.
- * gulp plugin to process the Coffee Scripts.
- * 
+ * gulp plugin to process the Coffee Scripts. 
  * Browserify lets us add our libraries as our dependencies.
+ * Compass plugin helps us with processing the sass files.
  */
 var gulp = require('gulp'), 
     gutil = require('gulp-util'), 
@@ -52,14 +52,26 @@ gulp.task('js', function(){
         .pipe(gulp.dest('builds/development/js'))
 });
 
-
+/*
+ * My source is called "sassSources". Then
+ * pipe it to the Compass plugin. On error do a logging using the
+ * gulp util plugin.
+ * 
+ * Options for the Compass are defined as java script object.
+ * Tell where the sass files are. (sass attribute)
+ * Then, tell where the images are. (image attribute)
+ * (style attribute - designates how the generated css files 
+ * should like. This is a best fit for the Development 
+ * purposes.)
+ * 
+ */ 
 gulp.task('compass', function(){
     gulp.src(sassSources)
         .pipe(compass({
             sass: 'components/sass',
-            image: 'build/development/images',
+            image: 'builds/development/images',
             style: 'expanded'
         }))
         .on('error', gutil.log)
-        .pipe(gulp.dest('build/development/css'))
+        .pipe(gulp.dest('builds/development/css'))
 });
