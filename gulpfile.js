@@ -24,6 +24,10 @@ var jsSources = ['components/scripts/rclick.js',
 
 var sassSources = ['components/sass/style.scss'];
 
+var htmlSources = ['builds/development/*.html'];
+
+var jsonSources = ['builds/development/js/*.json'];
+
 /* You create a task using the task() method.
  * 1. gulp.src() == Tells gulp - where the source files are.
  * 2. Now pipe the content to the src method, to coffee module with pipe() method.
@@ -86,6 +90,8 @@ gulp.task('compass', function(){
 gulp.task('watch', function(){
     gulp.watch(coffeeSources, ['coffee']);
     gulp.watch(jsSources, ['js']);
+    gulp.watch(htmlSources, ['html']);
+    gulp.watch(jsonSources, ['json']);
     gulp.watch('components/sass/*.scss', ['compass']);
 });
 
@@ -97,4 +103,14 @@ gulp.task('connect', function(){
     });
 });
 
-gulp.task('default', ['coffee', 'js', 'compass', 'watch', 'connect']);
+gulp.task('html', function(){
+    gulp.src(htmlSources)
+        .pipe(connect.reload())
+});
+
+gulp.task('json', function(){
+    gulp.src('builds/development/js/*.json')
+        .pipe(connect.reload())
+});
+
+gulp.task('default', ['html', 'json', 'coffee', 'js', 'compass', 'watch', 'connect']);
