@@ -15,6 +15,9 @@ var gulp = require('gulp'),
     gulpif = require('gulp-if'),
     uglify = require('gulp-uglify'),
     minifyHtml = require('gulp-minify-html'),
+    jsonminify = require('gulp-jsonminify'),
+    pngcrush = require('imagemin-pngcrush'),
+    imagemin = require('gulp-imagemin'),
     concat = require('gulp-concat');
 
 
@@ -43,6 +46,8 @@ sassSources = ['components/sass/style.scss'];
 htmlSources = ['builds/development/*.html'];
 
 jsonSources = ['builds/development/js/*.json'];
+
+imageSources = ['builds/development/images/**/*.*'];
 
 /* You create a task using the task() method.
  * 1. gulp.src() == Tells gulp - where the source files are.
@@ -109,6 +114,7 @@ gulp.task('watch', function(){
     gulp.watch(jsSources, ['js']);
     gulp.watch('builds/development/*.html', ['html']);
     gulp.watch(jsonSources, ['json']);
+    gulp.watch(imageSources, ['images']);
     gulp.watch('components/sass/*.scss', ['compass']);
 });
 
@@ -128,9 +134,23 @@ gulp.task('html', function(){
 
 });
 
+
+gulp.task('images', function(){
+    gulp.src(imageSources)
+    .pipe(gulpif(env === 'production', imagemin({
+        progressive: true,
+        svgoPlugins: [{removeViewBox: false}],
+        use: [pngcrush()]
+    })))
+    .pipe(gulpif(env === 'production', gulp.dest(outputDir + 'images')))
+    .pipe(connect.reload())
+});
+
 gulp.task('json', function(){
-    gulp.src(outputDir + 'js/*.json')
+    gulp.src(jsonSources)
+        .pipe(gulpif(env === 'production', jsonminify()))
+        .pipe(gulpif(env === 'production', gulp.dest('builds/production/js')))
         .pipe(connect.reload())
 });
 
-gulp.task('default', ['html', 'json', 'coffee', 'js', 'compass', 'watch', 'connect']);
+gulp.task('default', ['html', 'json', 'coffee', 'js', 'compass', 'images', 'watch', 'connect']);
